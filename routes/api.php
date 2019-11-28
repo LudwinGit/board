@@ -19,3 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/tasks','TaskController@index');
+Route::get('/division','ApiController@index');
+Route::get('/users','ApiController@users');
+Route::post('/task','TaskController@store');
+Route::get('/task/{division}','TaskController@show');
+Route::put('/task/{task}','TaskController@update')->name('task.update');

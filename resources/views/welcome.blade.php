@@ -10,7 +10,10 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{{ asset('css/style-task.css') }}">
     <style>
         body {
             background-color: #264C85;
@@ -19,10 +22,8 @@
 </head>
 
 <body>
-    <div>
-        <div class="content">
-            <div id="example">
-            </div>
+    <div class="content">
+        <div id="example">
         </div>
     </div>
 </body>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import TaskForm from './TaskForm';
 import TaskList from './TaskList';
+import ModalTask from './ModalTask';
 
 export default class Example extends Component {
 
@@ -10,14 +10,20 @@ export default class Example extends Component {
         this.state = {
             total_tasks: 0,
             tasks: [],
+            divisions: [],
+            usuarios: [],
             error: null,
             form: {
                 descripcion: '',
                 nombre: ''
-            }
+            },
+            division:0,
+            usuario_division: 6
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChangeDivision = this.handleChangeDivision.bind(this)
+        this.updateList = this.updateList.bind(this)
     }
 
     async handleSubmit(e) {
@@ -56,7 +62,49 @@ export default class Example extends Component {
 
     async componentDidMount() {
         try {
-            let res = await fetch('http://127.0.0.1:8000/api/tasks')
+            let res = await fetch(`http://127.0.0.1:8000/api/task/${this.state.division}`)
+            let data = await res.json()
+            this.setState({
+                tasks: data,
+                total_tasks: data.length
+            })
+
+        } catch (error) {
+            this.setState({
+                error
+            })
+        }
+
+        try {
+            let res = await fetch('http://127.0.0.1:8000/api/division')
+            let data = await res.json()
+            this.setState({
+                divisions: data,
+            })
+
+        } catch (error) {
+            this.setState({
+                error
+            })
+        }
+
+        try {
+            let res = await fetch('http://127.0.0.1:8000/api/users')
+            let data = await res.json()
+            this.setState({
+              usuarios: data,
+            })
+      
+          } catch (error) {
+            this.setState({
+              error
+            })
+          }
+    }
+
+    async updateList() {
+        try {
+            let res = await fetch(`http://127.0.0.1:8000/api/task/${this.state.division}`)
             let data = await res.json()
             this.setState({
                 tasks: data,
@@ -70,42 +118,30 @@ export default class Example extends Component {
         }
     }
 
+    handleChangeDivision(division){
+        
+        this.setState({
+            division : division
+        })
+
+        setTimeout(() => {
+            this.updateList()    
+        }, 1);
+        
+    }
+
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    {/* <div className="col-md-12">
-                        <div className="card">
-                            <div className="card-header">Tareas {this.state.total_tasks}</div>
-
-                            <div className="card-body">
-                                <TaskForm form={this.state.form}
-                                    onChange={this.handleChange}
-                                    onSubmit={this.handleSubmit}
-                                />
-                            </div>
-                        </div>
-                        <br />
-                    </div> */}
-                    <div className="col-md-4">
-                        <div className="">
-                            <div className="card-header bg-danger">Pendiente</div>
-                        </div>
-                        <TaskList tasks={this.state.tasks} />
-                    </div>
-                    <div className="col-md-4" >
-                        <div className="">
-                            <div className="card-header bg-warning">Proceso</div>
-                        </div>
-                        <TaskList tasks={this.state.tasks} />
-                    </div>
-                    <div className="col-md-4" >
-                        <div className="">
-                            <div className="card-header bg-primary">Finalizado</div>
-                        </div>
-                        <TaskList tasks={this.state.tasks} />
-                    </div>
-                </div>
+            <div>
+                <TaskList 
+                    divisions={this.state.divisions} 
+                    tasks={this.state.tasks} 
+                    updateList={this.updateList} 
+                    handleChangeDivision={this.handleChangeDivision}
+                    division={this.state.division}
+                    usuario_division={this.state.usuario_division}
+                    />
+                <ModalTask usuarios={this.state.usuarios} departament={this.state.division}/>
             </div>
         );
     }

@@ -1,0 +1,132 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-areas: 'sidebar pendiente proceso finalizado';
+    overflow: hidden;
+    padding: 0 10px ;
+}
+
+.list{
+    background-color: #e2e4e6;
+    height: 100vh;
+    
+}
+
+.sidebar{
+    background-color: transparent;
+    display: grid;
+    grid-template-rows: 20% 80%;
+}
+
+.sidebar .sidebar-icon{
+    text-align: center;
+}
+
+.sidebar .sidebar-content{
+    padding: 10px;
+    overflow-y: auto;
+    color: white;
+}
+
+.sidebar-content .item-sidebar{
+    font-size: 1em;
+    padding: 5px 20px;
+}
+
+
+.active{
+    background-color: teal;
+}
+
+.sidebar-content .item-sidebar:hover{
+    cursor: pointer;
+    background-color: teal;
+    padding-left: 10px;
+}
+
+.list .list-body{
+    height: 90% ;
+    overflow-y: auto;
+}
+
+.list-ingresando{
+    grid-area: pendiente;
+}
+
+.list-proceso{
+    grid-area: proceso;
+}
+
+.list-finalizado{
+    grid-area: finalizado;
+}
+
+.list-title{
+    font-weight: bolder;
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 10px;
+    margin-top: 10px;
+}
+
+.item{
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.5s;
+    border-radius: 5px;
+}
+
+.item-header{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.3em;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item-body{
+    border-top: 2px rgba(0, 0, 0, 0.1) solid;
+    padding: 5px;
+    margin-top: 5px;
+    display: none;
+}
+
+.item-header b + i:hover{
+    cursor: pointer;
+}
+
+.item-header:hover{
+    cursor: pointer;
+}
+
+
+
+.item-header.pendiente{
+    border-left: 3px solid red;
+}
+
+.item-header.proceso{
+    border-left: 3px solid green;
+}
+
+.item-header.finalizado{
+    border-left: 3px solid blue;
+}
+
+.item-button{
+    display: flex;
+     justify-content: space-between; 
+}
+
+.item-button > div button{
+    margin-left: 5px;
+}
